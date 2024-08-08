@@ -1,13 +1,30 @@
 import database from "infra/database";
 
 async function Status(request, response) {
-  const result = await database.query("SELECT 1 + 1 as sum;");
+  const updatedAt = new Date().toISOString();
+  const dbName = process.env.POSTGRES_DB;
 
-  console.log(result.rows);
+  let version = await database.query("SHOW server_version;");
+  let maxConnections = await database.query("SHOW max_connections;");
+  let openedConnections = await database.query({
+    text: `SELECT count(*)::int FROM pg_stat_activity WHERE datname = $1;`,
+    values: [dbName],
+  });
 
-  response
-    .status(200)
-    .json({ chave: "alunos do curso.dev são pessoas acima da média." });
+  version = version.rows[0].server_version;
+  maxConnections = maxConnections.rows[0].max_connections;
+  openedConnections = openedConnections.rows[0].count;
+
+  response.status(200).json({
+    updated_at: updatedAt,
+    dependencies: {
+      database: {
+        version: version,
+        max_connections: parseInt(maxConnections),
+        opened_connections: openedConnections,
+      },
+    },
+  });
 }
 
 export default Status;
