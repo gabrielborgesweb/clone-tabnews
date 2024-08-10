@@ -1,6 +1,14 @@
 import database from "infra/database";
 
 async function Status(request, response) {
+  const allowedMethods = ["GET"];
+
+  if (!allowedMethods.includes(request.method)) {
+    return response.status(405).json({
+      error: `Method "${request.method}" not allowed.`,
+    });
+  }
+
   const updatedAt = new Date().toISOString();
   const dbName = process.env.POSTGRES_DB;
 
