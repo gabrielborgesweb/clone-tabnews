@@ -1,13 +1,12 @@
 import database from "infra/database";
+const baseUrl = process.env.SITE_URL;
 
-beforeAll(cleanDatabase);
-
-async function cleanDatabase() {
+beforeAll(async () => {
   await database.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;");
-}
+});
 
 test("POST to /api/v1/migrations should return 200", async () => {
-  const response1 = await fetch("http://localhost:3000/api/v1/migrations", {
+  const response1 = await fetch(baseUrl + "/api/v1/migrations", {
     method: "POST",
   });
   expect(response1.status).toBe(201);
@@ -18,7 +17,7 @@ test("POST to /api/v1/migrations should return 200", async () => {
   expect(Array.isArray(response1Body)).toBe(true);
   expect(response1Body.length).toBeGreaterThan(0);
 
-  const response2 = await fetch("http://localhost:3000/api/v1/migrations", {
+  const response2 = await fetch(baseUrl + "/api/v1/migrations", {
     method: "POST",
   });
   expect(response2.status).toBe(200);
