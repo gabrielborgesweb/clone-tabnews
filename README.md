@@ -1,3 +1,3 @@
 # clone-tabnews
 
-Para o curso.dev de Filipe Deschamps
+Para o [curso.dev](https://curso.dev) de [@filipedeschamps](https://github.com/filipedeschamps)
