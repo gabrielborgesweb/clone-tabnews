@@ -15,10 +15,3 @@ test("GET to /api/v1/status should return 200", async () => {
 
   // console.log(responseBody);
 });
-
-// test.only("SQL Injection test", async () => {
-//   const response = await fetch(
-//     // "http://localhost:3000/api/v1/status?databaseName=local_db",
-//     "http://localhost:3000/api/v1/status?databaseName='; SELECT pg_sleep(4); --",
-//   );
-// });
