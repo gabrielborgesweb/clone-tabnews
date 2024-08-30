@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run docker:up && npm run services:wait:database && npm run migrations:up && next dev",
+    "test": "npm run docker:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --verbose\"",
+    "test:watch": "jest --watchAll --runInBand",
+    "test:clean": "npm run docker:down && docker system prune -a -f && npm test",
     "docker:up": "docker compose -f infra/compose.yaml up -d",
     "docker:stop": "docker compose -f infra/compose.yaml stop",
     "docker:down": "docker compose -f infra/compose.yaml down",
@@ -15,9 +18,6 @@
     "lint:prettier:fix": "prettier --write .",
     "lint:eslint:check": "next lint --dir .",
     "lint:secretlint:check": "secretlint \"**/*\"",
-    "test": "npm run docker:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --verbose\"",
-    "test:watch": "jest --watchAll --runInBand",
-    "test:clean": "npm run docker:down && docker system prune -a -f && npm test",
     "prepare": "husky",
     "commit": "cz"
   },
