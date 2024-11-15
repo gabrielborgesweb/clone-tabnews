@@ -1,17 +1,27 @@
+const { default: database } = require("infra/database");
+
 const baseUrl = process.env.SITE_URL;
 
-test("GET to /api/v1/status should return 200", async () => {
-  const response = await fetch(baseUrl + "/api/v1/status");
-  expect(response.status).toBe(200);
+beforeAll(async () => {
+  await database.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;");
+});
 
-  const responseBody = await response.json();
+describe("GET to /api/v1/status", () => {
+  describe("Anonymous user", () => {
+    test("Retrieving current system status", async () => {
+      const response = await fetch(baseUrl + "/api/v1/status");
+      expect(response.status).toBe(200);
 
-  const parsedUpdatedAt = new Date(responseBody.updated_at).toISOString();
-  expect(responseBody.updated_at).toEqual(parsedUpdatedAt);
+      const responseBody = await response.json();
 
-  expect(responseBody.dependencies.database.version).toEqual("16.0");
-  expect(responseBody.dependencies.database.max_connections).toEqual(100);
-  expect(responseBody.dependencies.database.opened_connections).toEqual(1);
+      const parsedUpdatedAt = new Date(responseBody.updated_at).toISOString();
+      expect(responseBody.updated_at).toEqual(parsedUpdatedAt);
 
-  // console.log(responseBody);
+      expect(responseBody.dependencies.database.version).toEqual("16.0");
+      expect(responseBody.dependencies.database.max_connections).toEqual(100);
+      expect(responseBody.dependencies.database.opened_connections).toEqual(1);
+
+      // console.log(responseBody);
+    });
+  });
 });
