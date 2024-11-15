@@ -1,9 +1,8 @@
-const { default: database } = require("infra/database");
-
+import orchestrator from "tests/orchestrator";
 const baseUrl = process.env.SITE_URL;
 
 beforeAll(async () => {
-  await database.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;");
+  await orchestrator.clearDatabase();
 });
 
 describe("GET to /api/v1/status", () => {

@@ -1,10 +1,9 @@
-import database from "infra/database";
 import orchestrator from "tests/orchestrator";
 const baseUrl = process.env.SITE_URL;
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
-  await database.query("DROP SCHEMA public CASCADE; CREATE SCHEMA public;");
+  await orchestrator.clearDatabase();
 });
 
 describe("POST to /api/v1/migrations", () => {
