@@ -4,10 +4,11 @@
   "description": "Para o curso.dev de Filipe Deschamps",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run docker:up && npm run services:wait:database && npm run migrations:up && (trap 'npm run docker:stop' INT TERM ; next dev)",
+    "dev:new": "npm run docker:up && npm run services:wait:database && npm run migrations:up && (trap 'npm run docker:stop' INT TERM ; next dev)",
+    "dev": "npm run docker:up && npm run services:wait:database && npm run migrations:up && next dev",
     "test": "npm run docker:up && concurrently -n next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --verbose\"",
     "posttest": "npm run docker:stop",
-    "test:watch": "jest --watchAll --runInBand",
+    "test:watch": "jest --watchAll --runInBand --verbose",
     "test:clean": "npm run docker:down && docker system prune -a -f && npm test",
     "docker:up": "docker compose -f infra/compose.yaml up -d",
     "docker:stop": "docker compose -f infra/compose.yaml stop",
