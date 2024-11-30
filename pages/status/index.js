@@ -11,7 +11,7 @@ export default function StatusPage() {
     <>
       <h1>Status:</h1>
       <h2 style={{ marginBottom: "2em" }}>
-        Os dados abaixo se atualizará no intervalo de 5 segundos.{" "}
+        Os dados abaixo se atualizará no intervalo de 5 segundos.
       </h2>
       <UpdatedAt />
       <DatabaseVersion />
