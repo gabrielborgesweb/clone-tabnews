@@ -16,6 +16,9 @@ body {
     "Helvetica Neue",
     sans-serif;
   font-size: 0.8em;
+}
+
+.frontpage {
   height: 100dvh;
   padding: 1em;
   display: flex;
