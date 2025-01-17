@@ -2,6 +2,7 @@ import orchestrator from "tests/orchestrator";
 const baseUrl = process.env.SITE_URL;
 
 beforeAll(async () => {
+  await orchestrator.waitForAllServices();
   await orchestrator.clearDatabase();
 });
 
