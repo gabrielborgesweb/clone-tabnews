@@ -1,6 +1,6 @@
 import migrationRunner from "node-pg-migrate";
 import { resolve } from "node:path";
-import database from "infra/database";
+import database from "infra-clonetabnews/database";
 
 export default async function Migrations(request, response) {
   const allowedMethods = ["GET", "POST"];
@@ -18,7 +18,7 @@ export default async function Migrations(request, response) {
     const defaultMigrationOptions = {
       dbClient: dbClient,
       dryRun: true,
-      dir: resolve("infra", "migrations"),
+      dir: resolve("infra-clonetabnews", "migrations"),
       direction: "up",
       verbose: true,
       migrationsTable: "pgmigrations",

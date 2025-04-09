@@ -1,4 +1,4 @@
-import database from "infra/database";
+import database from "infra-clonetabnews/database";
 
 async function Status(request, response) {
   const allowedMethods = ["GET"];
